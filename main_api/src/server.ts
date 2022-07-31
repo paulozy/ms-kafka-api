@@ -1,5 +1,8 @@
 import express, { Response } from "express";
+import "reflect-metadata";
 import { routes } from "./routes";
+
+import "./shared/container";
 
 const app = express();
 

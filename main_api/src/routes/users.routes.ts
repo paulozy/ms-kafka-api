@@ -1,13 +1,11 @@
 import { Router } from "express";
-import { createUserController } from "../modules/users/usecases/createUser";
-import { updateUserController } from "../modules/users/usecases/updateUser";
+import { CreateUserController } from "../modules/users/usecases/createUser/CreateUserController";
+import { UpdateUserController } from "../modules/users/usecases/updateUser/UpdateUserController";
 
 export const userRoutes = Router();
 
-userRoutes.post("/users", (req, res) => {
-  return createUserController.handle(req, res);
-});
+const createUserController = new CreateUserController();
+const updateUserController = new UpdateUserController();
 
-userRoutes.patch("/users", (req, res) => {
-  return updateUserController.handle(req, res);
-});
+userRoutes.post("/users", createUserController.handle);
+userRoutes.patch("/users", updateUserController.handle);
