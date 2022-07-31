@@ -1,8 +1,10 @@
 import express, { Response } from "express";
+import { routes } from "./routes";
 
 const app = express();
 
 app.use(express.json());
+app.use(routes);
 
 app.get("/", (_, res: Response) => {
   res.json({ message: "Hello World" });

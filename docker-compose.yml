@@ -73,3 +73,5 @@ services:
 
 volumes:
   pg_data:
+  ms_mailer:
+  main_api:
