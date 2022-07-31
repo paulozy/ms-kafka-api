@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { prisma } from "../../../../database";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
+import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class UsersRepository implements IUsersRepository {
@@ -16,13 +17,59 @@ export class UsersRepository implements IUsersRepository {
         data: { email, password, name },
       });
     } catch (error) {
-      throw new Error("Error creating user");
+      throw new Error("Error on creating user");
     }
   }
-  findById(id: string): Promise<User> {
-    throw new Error("Method not implemented.");
+
+  async update(data: IUpdateUserDTO, id: string): Promise<void> {
+    try {
+      const user = await this.findById(id);
+
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      let emailAlreadyExists = false;
+
+      if (data.email) {
+        const user = await this.findByEmail(data.email);
+        user ? (emailAlreadyExists = true) : (emailAlreadyExists = false);
+      }
+
+      if (emailAlreadyExists) {
+        throw new Error("Email already exists");
+      }
+
+      await this.repository.update({
+        where: { id },
+        data: data,
+      });
+    } catch (error) {
+      throw new Error("Error on updating user");
+    }
   }
-  findByEmail(email: string): Promise<User> {
-    throw new Error("Method not implemented.");
+
+  async findById(id: string): Promise<User> {
+    try {
+      const user = await this.repository.findFirstOrThrow({
+        where: { id },
+      });
+
+      return user;
+    } catch (error) {
+      throw new Error("User not found");
+    }
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    try {
+      const user = await this.repository.findFirstOrThrow({
+        where: { email },
+      });
+
+      return user;
+    } catch (error) {
+      throw new Error("User not found");
+    }
   }
 }
