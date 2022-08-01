@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { IShowUserDTO } from "../../dtos/IShowUserDTO";
-import { UsersRepository } from "../../repositories/implementation/UsersRepository";
+import { UsersRepository } from "../../repositories/implementations/UsersRepository";
 
 @injectable()
 export class ShowUserUseCase {

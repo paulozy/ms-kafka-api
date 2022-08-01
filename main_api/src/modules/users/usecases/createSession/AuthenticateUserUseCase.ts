@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../errors/AppError";
 import { Authentication } from "../../../../utils/authentication/implementations/Authentication";
 import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
-import { UsersRepository } from "../../repositories/implementation/UsersRepository";
+import { UsersRepository } from "../../repositories/implementations/UsersRepository";
 
 interface IRequest {
   email: string;

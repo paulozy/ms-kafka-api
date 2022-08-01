@@ -1,6 +1,6 @@
 import { sign, verify } from "jsonwebtoken";
 import { AppError } from "../../../errors/AppError";
-import { UsersRepository } from "../../../modules/users/repositories/implementation/UsersRepository";
+import { UsersRepository } from "../../../modules/users/repositories/implementations/UsersRepository";
 import { IAuthentication } from "../IAuthentication";
 
 export class Authentication implements IAuthentication {

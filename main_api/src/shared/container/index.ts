@@ -1,5 +1,5 @@
 import { container } from "tsyringe";
-import { UsersRepository } from "../../modules/users/repositories/implementation/UsersRepository";
+import { UsersRepository } from "../../modules/users/repositories/implementations/UsersRepository";
 import { IUsersRepository } from "../../modules/users/repositories/IUsersRepository";
 import { IAuthentication } from "../../utils/authentication/IAuthentication";
 import { Authentication } from "../../utils/authentication/implementations/Authentication";
