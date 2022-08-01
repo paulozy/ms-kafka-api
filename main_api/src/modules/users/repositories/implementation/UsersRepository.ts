@@ -2,6 +2,7 @@ import { User } from "@prisma/client";
 import { prisma } from "../../../../database";
 import { AppError } from "../../../../errors/AppError";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
+import { IShowUserDTO } from "../../dtos/IShowUserDTO";
 import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
@@ -51,10 +52,18 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<IShowUserDTO> {
     try {
       const user = await this.repository.findFirstOrThrow({
         where: { id },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+          posts: true,
+        },
       });
 
       return user;
