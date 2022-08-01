@@ -11,6 +11,7 @@ interface IRequest {
 interface IResponse {
   token: string;
   user: {
+    id: string;
     name: string;
     email: string;
   };
@@ -29,6 +30,8 @@ export class AuthenticateUserUseCase {
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
+    console.log(user);
+
     if (!user) {
       throw new Error("Email or password invalid");
     }
@@ -45,7 +48,11 @@ export class AuthenticateUserUseCase {
     const token = this.tokenGenerator.generate(user.id);
 
     return {
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
       token,
     };
   }
