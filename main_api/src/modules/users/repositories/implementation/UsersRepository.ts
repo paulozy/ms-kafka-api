@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { prisma } from "../../../../database";
+import { AppError } from "../../../../errors/AppError";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
@@ -17,7 +18,7 @@ export class UsersRepository implements IUsersRepository {
         data: { email, password, name },
       });
     } catch (error) {
-      throw new Error("Error on creating user");
+      throw new AppError("Error on creating user", 400);
     }
   }
 
@@ -26,7 +27,7 @@ export class UsersRepository implements IUsersRepository {
       const user = await this.findById(id);
 
       if (!user) {
-        throw new Error("User not found");
+        throw new AppError("User not found", 404);
       }
 
       await this.repository.update({
@@ -34,7 +35,7 @@ export class UsersRepository implements IUsersRepository {
         data: data,
       });
     } catch (error) {
-      throw new Error("Error on updating user");
+      throw new AppError("Error on updating user", 500);
     }
   }
 
@@ -46,7 +47,7 @@ export class UsersRepository implements IUsersRepository {
 
       return user;
     } catch (error) {
-      throw new Error("User not found");
+      throw new AppError("User not found", 404);
     }
   }
 

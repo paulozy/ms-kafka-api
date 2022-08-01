@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { Authentication } from "../../../../utils/authentication/implementations/Authentication";
 import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
 import { UsersRepository } from "../../repositories/implementation/UsersRepository";
@@ -33,7 +34,7 @@ export class AuthenticateUserUseCase {
     console.log(user);
 
     if (!user) {
-      throw new Error("Email or password invalid");
+      throw new AppError("Email or password invalid", 401);
     }
 
     const passwordMatched = await this.encrypter.compare(
@@ -42,7 +43,7 @@ export class AuthenticateUserUseCase {
     );
 
     if (!passwordMatched) {
-      throw new Error("Password does not match");
+      throw new AppError("Password does not match", 401);
     }
 
     const token = this.authenticator.generateToken(user.id);

@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { UsersRepository } from "../../repositories/implementation/UsersRepository";
 
 interface IRequest {
@@ -22,14 +23,14 @@ export class UpdateUserUseCase {
       const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
       if (userAlreadyExists) {
-        throw new Error("User already exists");
+        throw new AppError("User already exists");
       }
     }
 
     try {
       await this.usersRepository.update({ email, name, password }, id);
     } catch (error) {
-      throw new Error("Error on updating user");
+      throw new AppError(`Error on updating user`, 500);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { compare, hash } from "bcryptjs";
+import { AppError } from "../../../errors/AppError";
 import { IEncrypter } from "../IEncrypter";
 
 export class EncrypterBcrypt implements IEncrypter {
@@ -9,7 +10,7 @@ export class EncrypterBcrypt implements IEncrypter {
       const valueHashed = await hash(value, 12);
       return valueHashed;
     } catch (error) {
-      throw new Error(`Error encrypting password ${error}`);
+      throw new AppError(`Error encrypting password ${error}`, 500);
     }
   }
 
@@ -18,7 +19,7 @@ export class EncrypterBcrypt implements IEncrypter {
       const isMatch = await compare(value, hash);
       return isMatch;
     } catch (error) {
-      throw new Error(`Password does not match ${error}`);
+      throw new AppError(`Password does not match ${error}`, 401);
     }
   }
 }

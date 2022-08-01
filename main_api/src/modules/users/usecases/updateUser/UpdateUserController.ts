@@ -6,13 +6,13 @@ export class UpdateUserController {
   async handle(req: Request, res: Response): Promise<Response> {
     const data = req.body;
 
-    const id = "c503feba-33fb-405a-8cea-881a8e09b8a2";
+    const id = "6bddf6cf-8ab4-44d7-a1b4-29bd41447bfasa";
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
     try {
       await updateUserUseCase.execute(data, id);
-      return res.status(200).json();
+      return res.status(200).json({ test: req.headers });
     } catch (error) {
       return res.status(400).json({ error: error });
     }

@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
 import { UsersRepository } from "../../repositories/implementation/UsersRepository";
 
@@ -22,7 +23,7 @@ export class CreateUserUseCase {
       const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
       if (userAlreadyExists) {
-        throw new Error("User already exists");
+        throw new AppError("User already exists");
       }
 
       const passwordHash = await this.encrypter.encrypt(password);
@@ -33,7 +34,7 @@ export class CreateUserUseCase {
         password: passwordHash,
       });
     } catch (error) {
-      throw new Error(`Error creating user ${error}`);
+      throw new AppError(`Error creating user ${error}`, 500);
     }
   }
 }

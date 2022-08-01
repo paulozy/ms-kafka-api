@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
 
 export class AuthenticateUserController {
@@ -12,7 +13,7 @@ export class AuthenticateUserController {
       const token = await authenticateUserUseCase.execute({ email, password });
       res.status(200).json(token);
     } catch (error) {
-      throw new Error(`Error: ${error}`);
+      throw new AppError(`${error}`, 500);
     }
   }
 }
