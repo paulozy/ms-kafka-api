@@ -18,7 +18,12 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(" ");
 
   try {
-    authenticator.verifyToken(token);
+    const userId = await authenticator.verifyToken(token);
+
+    req.user = {
+      id: userId,
+    };
+
     next();
   } catch (error) {
     throw new AppError(`${error}`, 500);
