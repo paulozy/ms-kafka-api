@@ -50,11 +50,15 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User | undefined> {
     try {
-      const user = await this.repository.findFirstOrThrow({
+      const user = await this.repository.findFirst({
         where: { email },
       });
+
+      if (!user) {
+        return undefined;
+      }
 
       return user;
     } catch (error) {

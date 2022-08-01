@@ -5,6 +5,6 @@ import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO";
 export interface IUsersRepository {
   create({ email, password, name }: ICreateUserDTO): Promise<void>;
   update(data: IUpdateUserDTO, id: string): Promise<void>;
-  findById(id: string): Promise<User>;
-  findByEmail(email: string): Promise<User>;
+  findById(id: string): Promise<User | undefined>;
+  findByEmail(email: string): Promise<User | undefined>;
 }
