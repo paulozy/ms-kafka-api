@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
+import { Authentication } from "../../../../utils/authentication/implementations/Authentication";
 import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
-import { TokenGenerator } from "../../../../utils/tokengenerator/implementations/TokenGenerator";
 import { UsersRepository } from "../../repositories/implementation/UsersRepository";
 
 interface IRequest {
@@ -24,8 +24,8 @@ export class AuthenticateUserUseCase {
     private readonly usersRepository: UsersRepository,
     @inject("Encrypter")
     private readonly encrypter: EncrypterBcrypt,
-    @inject("TokenGenerator")
-    private readonly tokenGenerator: TokenGenerator
+    @inject("Authentication")
+    private readonly authenticator: Authentication
   ) {}
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
@@ -45,7 +45,7 @@ export class AuthenticateUserUseCase {
       throw new Error("Password does not match");
     }
 
-    const token = this.tokenGenerator.generate(user.id);
+    const token = this.authenticator.generateToken(user.id);
 
     return {
       user: {

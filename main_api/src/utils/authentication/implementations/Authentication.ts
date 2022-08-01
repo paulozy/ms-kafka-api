@@ -1,10 +1,10 @@
 import { sign } from "jsonwebtoken";
-import { ITokenGenerator } from "../ITokenGenerator";
+import { IAuthentication } from "../IAuthentication";
 
-export class TokenGenerator implements ITokenGenerator {
+export class Authentication implements IAuthentication {
   constructor() {}
 
-  generate(userId: string): string {
+  generateToken(userId: string): string {
     const token = sign({}, process.env.JSONWEBTOKEN_SECRET as string, {
       subject: userId,
       expiresIn: "1d",
