@@ -39,6 +39,18 @@ export class UsersRepository implements IUsersRepository {
     }
   }
 
+  async delete(id: string): Promise<void> {
+    const user = await this.findById(id);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await this.repository.delete({
+      where: { id },
+    });
+  }
+
   async findById(id: string): Promise<User> {
     try {
       const user = await this.repository.findFirstOrThrow({
