@@ -1,10 +1,11 @@
+import { Post } from "@prisma/client";
 import { ICreatePostDTO } from "../dtos/ICreatePostDTO";
-import { IUpdateUserDTO } from "../dtos/IUpdatePostDTO";
+import { IUpdatePostDTO } from "../dtos/IUpdatePostDTO";
 
 export interface IPostsRepository {
   create({ authorId, content, title }: ICreatePostDTO): Promise<void>;
-  update(data: IUpdateUserDTO, id: string): Promise<void>;
+  update(data: IUpdatePostDTO, id: string, userId: string): Promise<void>;
   // delete(id: string): Promise<void>;
-  // findById(id: string): Promise<IShowUserDTO | undefined>;
+  findById(id: string): Promise<Post | undefined>;
   // findByEmail(email: string): Promise<User | undefined>;
 }

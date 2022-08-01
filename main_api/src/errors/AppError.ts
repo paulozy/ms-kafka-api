@@ -1,3 +1,8 @@
+export interface IAppError {
+  message: string;
+  statusCode: number;
+}
+
 export class AppError {
   public readonly message: string;
   public readonly statusCode: number;

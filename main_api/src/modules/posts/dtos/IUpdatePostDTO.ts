@@ -1,5 +1,4 @@
-export interface IUpdateUserDTO {
-  authorId: string;
+export interface IUpdatePostDTO {
   title?: string;
   content?: string;
 }
