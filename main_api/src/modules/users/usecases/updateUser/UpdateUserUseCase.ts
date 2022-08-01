@@ -18,6 +18,14 @@ export class UpdateUserUseCase {
     { email, name, password }: IRequest,
     id: string
   ): Promise<void> {
+    if (email) {
+      const userAlreadyExists = await this.usersRepository.findByEmail(email);
+
+      if (userAlreadyExists) {
+        throw new Error("User already exists");
+      }
+    }
+
     try {
       await this.usersRepository.update({ email, name, password }, id);
     } catch (error) {

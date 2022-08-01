@@ -29,17 +29,6 @@ export class UsersRepository implements IUsersRepository {
         throw new Error("User not found");
       }
 
-      let emailAlreadyExists = false;
-
-      if (data.email) {
-        const user = await this.findByEmail(data.email);
-        user ? (emailAlreadyExists = true) : (emailAlreadyExists = false);
-      }
-
-      if (emailAlreadyExists) {
-        throw new Error("Email already exists");
-      }
-
       await this.repository.update({
         where: { id },
         data: data,
