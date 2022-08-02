@@ -41,7 +41,7 @@ export class CreatePostUseCase {
       const message = {
         key: "new_post",
         value: {
-          recipient: user.id,
+          recipient: user.email,
           data: {
             title: post.title,
             content: post.content,

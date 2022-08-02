@@ -18,7 +18,7 @@ export class ProducerFactory {
   private createProducer(): Producer {
     const kafka = new Kafka({
       clientId: "main_api",
-      brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
+      brokers: [`kafka:29092`],
     });
 
     return kafka.producer({
