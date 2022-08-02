@@ -47,6 +47,26 @@ export class PostsRepository implements IPostsRepository {
     }
   }
 
+  async delete(id: string, userId: string): Promise<void> {
+    const post = await this.findById(id);
+
+    if (!post) {
+      throw new AppError("Post not found", 404);
+    }
+
+    if (post.authorId !== userId) {
+      throw new AppError("You don't have permission to delete this post", 403);
+    }
+
+    try {
+      await this.repository.delete({
+        where: { id },
+      });
+    } catch (error) {
+      throw new AppError("Error on deleting post", 500);
+    }
+  }
+
   async findById(id: string): Promise<Post | undefined> {
     try {
       const post = await this.repository.findFirstOrThrow({
