@@ -1,4 +1,5 @@
 import { Consumer, Kafka } from "kafkajs";
+import { sendEmail } from "../nodemailer/config";
 
 export class ConsumerFactory {
   private consumer: Consumer;
@@ -10,7 +11,7 @@ export class ConsumerFactory {
   private createConsumer(): Consumer {
     const kafka = new Kafka({
       clientId: "ms_mailer",
-      brokers: [`${process.env.KAFKA_HOST}:${process.env.KAFKA_PORT}`],
+      brokers: [`kafka:29092`],
     });
 
     return kafka.consumer({
@@ -38,16 +39,14 @@ export class ConsumerFactory {
   public async run(): Promise<void> {
     await this.consumer.run({
       eachMessage: async ({ topic, message }) => {
-        if (message.value) {
-          const { recipient, data } = JSON.parse(message.value.toString());
-          console.log(recipient, data);
-        }
+        const { recipient, data } = JSON.parse(message.value.toString());
 
-        console.log("no has value on data message");
+        try {
+          await sendEmail({ recipient, data });
+        } catch (error) {
+          console.log("Error sending email: ", error);
+        }
       },
     });
-
-    // try {
-    // } catch (error) {}
   }
 }
