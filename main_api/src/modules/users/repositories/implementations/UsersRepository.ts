@@ -52,6 +52,11 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
+  async findAll(): Promise<User[]> {
+    const users = await this.repository.findMany();
+    return users;
+  }
+
   async findById(id: string): Promise<IShowUserDTO> {
     try {
       const user = await this.repository.findFirstOrThrow({

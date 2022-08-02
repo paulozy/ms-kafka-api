@@ -12,9 +12,9 @@ export class PostsRepository implements IPostsRepository {
     this.repository = prisma.post;
   }
 
-  async create({ authorId, content, title }: ICreatePostDTO): Promise<void> {
+  async create({ authorId, content, title }: ICreatePostDTO): Promise<Post> {
     try {
-      await this.repository.create({
+      return this.repository.create({
         data: { authorId, content, title },
       });
     } catch (error) {
