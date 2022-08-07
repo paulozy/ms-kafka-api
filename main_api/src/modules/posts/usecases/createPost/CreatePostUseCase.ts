@@ -18,7 +18,7 @@ export class CreatePostUseCase {
     private postsRepository: PostsRepository,
     @inject("UsersRepository")
     private usersRepository: UsersRepository
-  ) {}
+  ) { }
 
   async execute({ authorId, content, title }: IRequest): Promise<void> {
     try {
@@ -37,7 +37,11 @@ export class CreatePostUseCase {
   async sendNotification(post: Post, authorId: string): Promise<void> {
     const users = await this.usersRepository.findAll();
 
-    users.forEach(async (user) => {
+    const usersForSendNotification = users.filter(user => user.id != authorId)
+
+    console.log(usersForSendNotification)
+
+    usersForSendNotification.forEach(async (user) => {
       const message = {
         key: "new_post",
         value: {
