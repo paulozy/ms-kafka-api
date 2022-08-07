@@ -78,4 +78,18 @@ export class PostsRepository implements IPostsRepository {
       throw new AppError("Error on finding post", 500);
     }
   }
+
+  async findAllByUserId(authorId: string): Promise<Post[]> {
+    try {
+      const posts = await this.repository.findMany({
+        where: {
+          authorId
+        }
+      })
+
+      return posts
+    } catch (error) {
+      throw new AppError('Posts not found', 500)
+    }
+  }
 }

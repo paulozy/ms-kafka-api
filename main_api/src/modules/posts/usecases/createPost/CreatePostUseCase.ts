@@ -2,8 +2,8 @@ import { Post } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../errors/AppError";
 import { newPost } from "../../../../services/kafka";
-import { UsersRepository } from "../../../users/repositories/implementations/UsersRepository";
-import { PostsRepository } from "../../repositories/implementations/PostsRepository";
+import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
+import { IPostsRepository } from "../../repositories/IPostsRepository";
 
 interface IRequest {
   authorId: string;
@@ -15,9 +15,9 @@ interface IRequest {
 export class CreatePostUseCase {
   constructor(
     @inject("PostsRepository")
-    private postsRepository: PostsRepository,
+    private postsRepository: IPostsRepository,
     @inject("UsersRepository")
-    private usersRepository: UsersRepository
+    private usersRepository: IUsersRepository
   ) { }
 
   async execute({ authorId, content, title }: IRequest): Promise<void> {
