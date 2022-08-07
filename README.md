@@ -59,7 +59,7 @@ Alternatively, see the GitHub documentation on <a href="https://docs.github.com/
 <table>
   <tr>
     <td align="center">
-      <a href="http://github.com/paulozy">
+      <a href="http://github.com/paulozy" target="_blank">
         <img src="https://github.com/paulozy.png" width="100px;" alt="Picture by Paulo Abre on GitHub"/><br>
         <sub>
           <b>Paulo Abreu</b>
