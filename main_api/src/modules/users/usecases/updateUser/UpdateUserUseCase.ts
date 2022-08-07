@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../errors/AppError";
-import { UsersRepository } from "../../repositories/implementations/UsersRepository";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
   name?: string;
@@ -12,8 +12,8 @@ interface IRequest {
 export class UpdateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private readonly usersRepository: UsersRepository
-  ) {}
+    private readonly usersRepository: IUsersRepository,
+  ) { }
 
   async execute(
     { email, name, password }: IRequest,

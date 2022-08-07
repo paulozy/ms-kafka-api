@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../errors/AppError";
-import { Authentication } from "../../../../utils/authentication/implementations/Authentication";
-import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
-import { UsersRepository } from "../../repositories/implementations/UsersRepository";
+import { IAuthentication } from "../../../../utils/authentication/IAuthentication";
+import { IEncrypter } from "../../../../utils/encrypter/IEncrypter";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
   email: string;
@@ -22,12 +22,12 @@ interface IResponse {
 export class AuthenticateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private readonly usersRepository: UsersRepository,
+    private readonly usersRepository: IUsersRepository,
     @inject("Encrypter")
-    private readonly encrypter: EncrypterBcrypt,
+    private readonly encrypter: IEncrypter,
     @inject("Authentication")
-    private readonly authenticator: Authentication
-  ) {}
+    private readonly authenticator: IAuthentication
+  ) { }
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 

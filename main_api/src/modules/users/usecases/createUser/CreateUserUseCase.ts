@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { AppError } from "../../../../errors/AppError";
-import { EncrypterBcrypt } from "../../../../utils/encrypter/implementations/EncrypterBcrypt";
-import { UsersRepository } from "../../repositories/implementations/UsersRepository";
+import { IEncrypter } from "../../../../utils/encrypter/IEncrypter";
+import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IRequest {
   name: string;
@@ -13,10 +13,10 @@ interface IRequest {
 export class CreateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private readonly usersRepository: UsersRepository,
+    private readonly usersRepository: IUsersRepository,
     @inject("Encrypter")
-    private readonly encrypter: EncrypterBcrypt
-  ) {}
+    private readonly encrypter: IEncrypter
+  ) { }
 
   async execute({ email, name, password }: IRequest): Promise<void> {
     try {
