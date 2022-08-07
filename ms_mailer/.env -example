@@ -1,0 +1,6 @@
+#server
+PORT=
+
+#mailtrap
+MAILTRAP_USER=
+MAILTRAP_PASS=
