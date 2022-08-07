@@ -1,6 +1,12 @@
 # ms-kafka-api
 This is a project for study microservices using kafka and two api's express
 
+![GitHub repo size](https://img.shields.io/github/repo-size/paulozy/ms-kafka-api?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/paulozy/ms-kafka-api?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/paulozy/ms-kafka-api?style=for-the-badge)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/paulozy/ms-kafka-api?style=for-the-badge)
+![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/paulozy/ms-kafka-api?style=for-the-badge)
+
 # 💻 requirements
 
 * Nodejs - v16.16.0
